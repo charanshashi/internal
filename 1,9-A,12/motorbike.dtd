@@ -1,0 +1,21 @@
+<!ELEMENT catalog (motorbike*)>
+
+<!ELEMENT motorbike (make, model, year, colour, engine, chasisNumber, accessories)>
+
+<!ELEMENT make (#PCDATA)>
+<!ELEMENT model (#PCDATA)>
+<!ELEMENT year (#PCDATA)>
+<!ELEMENT colour (#PCDATA)>
+<!ELEMENT engine (engineNumber, numberOfCylinders, typeOfFuel)>
+<!ELEMENT chasisNumber (#PCDATA)>
+<!ELEMENT accessories EMPTY>
+
+<!ELEMENT engineNumber (#PCDATA)>
+<!ELEMENT numberOfCylinders (#PCDATA)>
+<!ELEMENT typeOfFuel (#PCDATA)>
+
+<!ATTLIST accessories
+    discBrake (yes | no) #REQUIRED
+    autoStart (yes | no) #REQUIRED
+    radio (yes | no) #REQUIRED
+>

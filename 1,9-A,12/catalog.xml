@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog SYSTEM "motorbike.dtd">
+<catalog>
+    <motorbike>
+        <make>Honda</make>
+        <model>CBR600RR</model>
+        <year>2020</year>
+        <colour>Red</colour>
+        <engine>
+            <engineNumber>ENG123456</engineNumber>
+            <numberOfCylinders>4</numberOfCylinders>
+            <typeOfFuel>Petrol</typeOfFuel>
+        </engine>
+        <chasisNumber>CHS123456</chasisNumber>
+        <accessories discBrake="yes" autoStart="yes" radio="no" />
+    </motorbike>
+    <motorbike>
+        <make>Yamaha</make>
+        <model>YZF-R6</model>
+        <year>2021</year>
+        <colour>Blue</colour>
+        <engine>
+            <engineNumber>ENG654321</engineNumber>
+            <numberOfCylinders>4</numberOfCylinders>
+            <typeOfFuel>Petrol</typeOfFuel>
+        </engine>
+        <chasisNumber>CHS654321</chasisNumber>
+        <accessories discBrake="yes" autoStart="no" radio="yes" />
+    </motorbike>
+</catalog>
