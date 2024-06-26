@@ -1,0 +1,114 @@
+package pract1;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Jdbc {
+
+    // JDBC URL, username, and password of MySQL server
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306";
+    private static final String DB_NAME = "bookdb"; // Name of the database
+    private static final String USER = "root";
+    private static final String PASSWORD = "Mohit#@7"; // Replace with your MySQL password
+
+    public static void main(String[] args) {
+        Connection conn = null;
+        try {
+            // Register JDBC driver (Optional for MySQL since JDBC 4.0)
+            Class.forName("com.mysql.jdbc.Driver");
+
+            // Open a connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
+            System.out.println("Connected");
+
+            // Create database "bookdb" if not exists
+            createDatabase(conn);
+
+            // Use "bookdb" database
+            conn.setCatalog(DB_NAME);
+
+            // Create table "books" if not exists
+            createBooksTable(conn);
+
+            // Insert values into "books" table
+            insertBook(conn, "Effective Java", 45.99, 10);
+            insertBook(conn, "Clean Code", 38.50, 8);
+            insertBook(conn, "Java Concurrency in Practice", 55.00, 5);
+
+            // Display books based on name search
+            displayBooks(conn, "Clean Code");
+
+            System.out.println("Database operations completed successfully.");
+
+        } catch (SQLException se) {
+            // Handle errors for JDBC
+            se.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            // Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            // Close resources in finally block
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+
+    // Method to create database "bookdb" if not exists
+    private static void createDatabase(Connection conn) throws SQLException {
+        String sql = "CREATE DATABASE IF NOT EXISTS " + DB_NAME;
+        try (Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(sql);
+            System.out.println("Database '" + DB_NAME + "' created successfully.");
+        }
+    }
+
+    // Method to create table "books" if not exists
+    private static void createBooksTable(Connection conn) throws SQLException {
+        String sql = "CREATE TABLE IF NOT EXISTS books (" +
+                     "id INT AUTO_INCREMENT PRIMARY KEY," +
+                     "name VARCHAR(255) NOT NULL," +
+                     "price DOUBLE NOT NULL," +
+                     "quantity INT NOT NULL," +
+                     "amount DOUBLE GENERATED ALWAYS AS (price * quantity) STORED" + 
+                     ")";
+        try (Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(sql);
+            System.out.println("Table 'books' created successfully.");
+        }
+    }
+
+    // Method to insert a book record into "books" table
+    private static void insertBook(Connection conn, String name, double price, int quantity) throws SQLException {
+        String sql = "INSERT INTO books (name, price, quantity) VALUES ('" + name + "', " + price + ", " + quantity + ")";
+        try (Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(sql);
+            System.out.println("Inserted: " + name + ", Price: " + price + ", Quantity: " + quantity);
+        }
+    }
+
+    // Method to display books based on name search
+    private static void displayBooks(Connection conn, String bookName) throws SQLException {
+        String sql = "SELECT * FROM books WHERE name LIKE '%" + bookName + "%'";
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            System.out.println("Books matching the search term '" + bookName + "':");
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                double price = rs.getDouble("price");
+                int quantity = rs.getInt("quantity");
+                double amount = rs.getDouble("amount");
+                System.out.println("ID: " + id + ", Name: " + name + ", Price: " + price + ", Quantity: " + quantity + ", Amount: " + amount);
+            }
+        }
+    }
+}
