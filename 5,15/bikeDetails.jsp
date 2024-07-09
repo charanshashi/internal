@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.bike.Bike" %>
-<jsp:useBean id="bike" class="com.bike.Bike" scope="session" />
-
+<jsp:useBean id="Bike" class="com.bike.Bike" scope="session" />
+<jsp:setProperty property="*" name="Bike"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,21 +61,10 @@
             <input type="number" step="0.01" id="price" name="price" required>
         </div>
         <div class="form-group">
-            <button type="submit">Submit</button>
+            <input type="submit" value="submit"/>
         </div>
     </form>
 
-    <%
-        String model = request.getParameter("model");
-        String makeYear = request.getParameter("makeYear");
-        String price = request.getParameter("price");
-
-        if (model != null && makeYear != null && price != null) {
-            bike.setModel(model);
-            bike.setMakeYear(Integer.parseInt(makeYear));
-            bike.setPrice(Double.parseDouble(price));
-        }
-    %>
 	
 </body>
 </html>

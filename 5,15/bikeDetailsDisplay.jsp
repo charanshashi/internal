@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-   <jsp:useBean id="bike" class="com.bike.Bike" scope="session" />
+   <jsp:useBean id="Bike" class="com.bike.Bike" scope="session" />
+   <jsp:setProperty property="*" name="Bike"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +11,10 @@
 <body>
     <div class="details">
         <h2>Bike Details</h2>
-        <p><strong>Model:</strong> <%= bike.getModel() %></p>
-        <p><strong>Make Year:</strong> <%= bike.getMakeYear() %></p>
-        <p><strong>Price:</strong> $<%= bike.getPrice() %></p>
+        <p><strong>Model:</strong> <%= Bike.getModel() %></p>
+        model : <jsp:getProperty name="Bike" property="model"/>
+        <p><strong>Make Year:</strong> <%= Bike.getMakeYear() %></p>
+        <p><strong>Price:</strong> $<%= Bike.getPrice() %></p>
     </div>
 </body>
 </html>
